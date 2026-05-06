@@ -1,0 +1,112 @@
+// Unified Service Desk schema (v1 core + v3 extensions) — SQLite dev DB
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model PartyUser {
+  id           String  @id @default(cuid())
+  email        String  @unique
+  displayName  String
+  role         String
+  department   String?
+  active       Boolean @default(true)
+  createdAt    DateTime @default(now())
+
+  requestsOpened ServiceRequest[] @relation("Requester")
+}
+
+model AssignmentGroup {
+  id    String @id @default(cuid())
+  name  String @unique
+  email String?
+}
+
+model Location {
+  id      String @id @default(cuid())
+  name    String
+  region  String?
+  country String?
+  cis     CmdbCi[]
+}
+
+model SlaPolicy {
+  id                    String @id @default(cuid())
+  name                  String @unique
+  responseTargetMinutes Int?
+  resolveTargetMinutes  Int?
+  calendar              String @default("24x7")
+
+  catalogItems CatalogItem[]
+}
+
+model CatalogCategory {
+  id       String @id @default(cuid())
+  name     String
+  parentId String?
+  active   Boolean @default(true)
+
+  items CatalogItem[]
+}
+
+model CatalogItem {
+  id                  String @id @default(cuid())
+  categoryId          String
+  name                String
+  shortDescription    String?
+  fulfillmentGroup    String?
+  operationalStatus   String  @default("Operational")
+  slaPolicyId         String?
+
+  category CatalogCategory @relation(fields: [categoryId], references: [id])
+  slaPolicy SlaPolicy?     @relation(fields: [slaPolicyId], references: [id])
+  requests ServiceRequest[]
+}
+
+model KnowledgeArticle {
+  id         String   @id @default(cuid())
+  number     String   @unique
+  title      String
+  body       String
+  state      String
+  visibility String
+  authorName String?
+  topic      String?
+  updatedAt  DateTime @default(now())
+}
+
+model ServiceRequest {
+  id               String   @id @default(cuid())
+  number           String   @unique
+  catalogItemId    String?
+  shortDescription String
+  state            String
+  priority         String
+  requesterName    String
+  requestedFor     String?
+  openedAt         DateTime @default(now())
+  requesterUserId  String?
+
+  catalogItem CatalogItem? @relation(fields: [catalogItemId], references: [id])
+  requester   PartyUser?   @relation("Requester", fields: [requesterUserId], references: [id])
+}
+
+model CmdbCi {
+  id                   String  @id @default(cuid())
+  assetTag             String  @unique
+  name                 String
+  ciClass              String
+  environment          String
+  owner                String?
+  status               String
+  ipAddress            String?
+  serialNumber         String?
+  businessCriticality  String?
+  locationId           String?
+
+  location Location? @relation(fields: [locationId], references: [id])
+}

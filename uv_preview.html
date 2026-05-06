@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UV Collection Preview</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cream: #FAFAF9;
+            --ink: #1C1917;
+            --gold: #c9a96e;
+            --text-muted: #78716C;
+        }
+
+        * { margin:0; padding:0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: var(--cream); color: var(--ink); line-height: 1.6; }
+        h1, h2, h3, .logo { font-family: 'Playfair Display', serif; }
+
+        .nav {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 24px 40px; border-bottom: 1px solid #E7E5E4; sticky top: 0; background: var(--cream); z-index: 100;
+        }
+        .nav-links { display: flex; gap: 32px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; }
+        .nav-links a { text-decoration: none; color: inherit; font-weight: 600; }
+        .logo { font-size: 24px; text-transform: uppercase; letter-spacing: 0.15em; }
+
+        .hero {
+            height: 80vh; min-height: 500px;
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.2)), url('https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=2070');
+            background-size: cover; background-position: center;
+            display: flex; align-items: center; justify-content: center; text-align: center; color: white;
+        }
+        .hero-content { max-width: 600px; }
+        .hero h1 { font-size: 52px; margin-bottom: 20px; }
+        .btn-primary { 
+            background: var(--ink); color: white; border: none; padding: 16px 40px; 
+            text-transform: uppercase; letter-spacing: 0.15em; font-size: 12px; cursor: pointer;
+        }
+
+        .section { padding: 80px 40px; max-width: 1400px; margin: 0 auto; }
+        .section-title { font-size: 32px; text-align: center; margin-bottom: 50px; text-transform: uppercase; letter-spacing: 0.1em; }
+
+        .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+        .category { height: 450px; position: relative; background: #292524; color: white; display: flex; align-items: flex-end; padding: 30px; overflow: hidden; }
+        .category-name { font-size: 28px; position: relative; z-index: 2; }
+        .category-img { position: absolute; inset: 0; opacity: 0.7; background-size: cover; background-position: center; transition: transform 0.8s; }
+        .category:hover .category-img { transform: scale(1.1); }
+
+        .product-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: 50px; }
+        .product-card { text-align: center; }
+        .product-img { aspect-ratio: 3/4; background: #E7E5E4; margin-bottom: 15px; background-size: cover; background-position: center; }
+        .product-designer { font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; }
+        .product-name { font-size: 15px; margin: 5px 0; }
+
+        .footer { background: var(--ink); color: #A8A29E; padding: 80px 40px; text-align: center; }
+        .footer h2 { color: white; margin-bottom: 20px; font-size: 22px; letter-spacing: 0.1em; }
+        .footer-bottom { margin-top: 40px; font-size: 12px; border-top: 1px solid #44403C; padding-top: 30px; }
+        
+        @media (max-width: 1024px) {
+            .grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-links">
+            <a href="#">New Arrivals</a>
+            <a href="#">Men</a>
+            <a href="#">Women</a>
+            <a href="#">Kids</a>
+        </div>
+        <div class="logo">UV COLLECTION</div>
+        <div class="nav-links">
+            <a href="#">Search</a>
+            <a href="#">Account</a>
+            <a href="#">Cart (0)</a>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-content">
+            <h1>LUXURY MADE PERSONAL</h1>
+            <p style="margin-bottom: 30px; opacity: 0.9;">Discover the finest Indian couture curated for your story.</p>
+            <button class="btn-primary">Shop New Arrivals</button>
+        </div>
+    </header>
+
+    <section class="section">
+        <h2 class="section-title">Explore Categories</h2>
+        <div class="grid">
+            <div class="category">
+                <div class="category-img" style="background-image: url('https://images.unsplash.com/photo-1539008835657-9e8e9680c956?q=80&w=800')"></div>
+                <h3 class="category-name">WOMENSWEAR</h3>
+            </div>
+            <div class="category">
+                <div class="category-img" style="background-image: url('https://images.unsplash.com/photo-1490578474895-699bc4f35112?q=80&w=800')"></div>
+                <h3 class="category-name">MENSWEAR</h3>
+            </div>
+            <div class="category">
+                <div class="category-img" style="background-image: url('https://images.unsplash.com/photo-1621335300184-7a911739c9f2?q=80&w=800')"></div>
+                <h3 class="category-name">KIDSWEAR</h3>
+            </div>
+            <div class="category">
+                <div class="category-img" style="background-image: url('https://images.unsplash.com/photo-1509319117193-57bab727e09d?q=80&w=800')"></div>
+                <h3 class="category-name">ACCESSORIES</h3>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" style="background: #F5F5F4;">
+        <h2 class="section-title">New Arrivals</h2>
+        <div class="product-grid">
+            <div class="product-card">
+                <div class="product-img" style="background-image: url('https://images.unsplash.com/photo-1583391733958-650fac5ebf7f')"></div>
+                <div class="product-designer">Abhinav Mishra</div>
+                <h4 class="product-name">Anarkali Ivory</h4>
+                <div>Rs. 205,000</div>
+            </div>
+            <div class="product-card">
+                <div class="product-img" style="background-image: url('https://images.unsplash.com/photo-1595777457583-95e059d581b8')"></div>
+                <div class="product-designer">Gopi Vaid</div>
+                <h4 class="product-name">Anarkali Pink</h4>
+                <div>Rs. 51,500</div>
+            </div>
+            <div class="product-card">
+                <div class="product-img" style="background-image: url('https://images.unsplash.com/photo-1618932260643-eee4a2f652a6')"></div>
+                <div class="product-designer">Mahima Mahajan</div>
+                <h4 class="product-name">Anarkali Aqua</h4>
+                <div>Rs. 64,200</div>
+            </div>
+            <div class="product-card">
+                <div class="product-img" style="background-image: url('https://images.unsplash.com/photo-1550614000-4b95dd26bd6c')"></div>
+                <div class="product-designer">Gopi Vaid</div>
+                <h4 class="product-name">Anarkali Pant</h4>
+                <div>Rs. 41,000</div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <h2>UV COLLECTION</h2>
+        <p>Luxury Made Personal. Curated by Webisure.</p>
+        <div class="footer-bottom">
+            <p>© 2026 UV Collection. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

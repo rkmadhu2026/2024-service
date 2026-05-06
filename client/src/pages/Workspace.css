@@ -1,0 +1,115 @@
+.workspace-page .inc-link {
+  display: inline-block;
+  margin-right: 8px;
+  color: var(--primary-blue);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.workspace-page .inc-link:hover {
+  text-decoration: underline;
+}
+
+.network-canvas {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  min-height: 360px;
+  padding: 20px;
+  background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+  border-radius: var(--radius-md);
+  color: #e2e8f0;
+}
+
+.network-node {
+  padding: 16px;
+  border-radius: 12px;
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  background: rgba(15, 23, 42, 0.6);
+  text-align: center;
+}
+
+.network-node.core {
+  grid-column: span 2;
+  border-color: #38bdf8;
+}
+
+.network-node h3 {
+  margin: 0 0 6px;
+  font-size: 14px;
+}
+
+.network-node .node-meta {
+  font-size: 11px;
+  color: #94a3b8;
+}
+
+.network-edge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  color: #64748b;
+}
+
+.integrations-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 14px;
+}
+
+.integration-card {
+  padding: 18px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  background: #fff;
+  box-shadow: var(--shadow-card);
+}
+
+.integration-card h3 {
+  margin: 0 0 6px;
+  font-size: 16px;
+}
+
+.integration-card .int-type {
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.badge-connected {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 800;
+  background: #ecfdf5;
+  color: #047857;
+}
+
+.badge-pilot {
+  background: #fffbeb;
+  color: #b45309;
+}
+
+.settings-grid {
+  display: grid;
+  gap: 16px;
+  max-width: 560px;
+}
+
+.settings-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 16px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  background: #fff;
+}
+
+.settings-row span {
+  font-weight: 700;
+}

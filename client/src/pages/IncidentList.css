@@ -1,0 +1,235 @@
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.stat-mini {
+  min-height: 76px;
+  padding: 14px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  background: #fff;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: var(--shadow-card);
+}
+
+.stat-mini-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+}
+
+.stat-mini.critical .stat-mini-icon { color: var(--danger); background: #fef2f2; }
+.stat-mini.high .stat-mini-icon { color: var(--warning); background: #fffbeb; }
+.stat-mini.medium .stat-mini-icon { color: var(--info); background: #eff6ff; }
+.stat-mini.low .stat-mini-icon { color: #64748b; background: #f8fafc; }
+.stat-mini.resolved .stat-mini-icon { color: var(--success); background: #ecfdf5; }
+
+.stat-mini strong,
+.stat-mini small {
+  display: block;
+}
+
+.stat-mini strong {
+  font-size: 22px;
+  line-height: 1;
+}
+
+.stat-mini small {
+  margin-top: 4px;
+  color: var(--text-secondary);
+  font-weight: 700;
+}
+
+.incident-toolbar {
+  padding: 12px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  background: #fff;
+  box-shadow: var(--shadow-card);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.toolbar-left,
+.toolbar-right,
+.bulk-actions,
+.view-tabs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.toolbar-left select,
+.filter-btn {
+  min-height: 34px;
+  padding: 7px 10px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  background: #fff;
+  color: var(--text-primary);
+  font-weight: 700;
+}
+
+.bulk-actions {
+  padding: 4px 6px 4px 10px;
+  border-radius: var(--radius-md);
+  background: #eff6ff;
+  color: var(--primary-blue);
+}
+
+.view-tabs {
+  padding: 3px;
+  border-radius: var(--radius-md);
+  background: #eef2f7;
+}
+
+.view-tab {
+  min-height: 30px;
+  padding: 6px 11px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.view-tab.active {
+  background: #fff;
+  color: var(--primary-blue);
+  box-shadow: 0 1px 4px rgba(15, 28, 63, 0.12);
+}
+
+.queue-table .checkbox-cell {
+  width: 42px;
+  min-width: 42px;
+}
+
+.queue-table tr.selected {
+  background: #eff6ff;
+}
+
+.inc-source {
+  display: block;
+  margin-top: 4px;
+  color: var(--text-secondary);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.inc-source.auto {
+  color: var(--purple);
+}
+
+.assignee.rich > span:last-child strong,
+.assignee.rich > span:last-child small {
+  display: block;
+}
+
+.assignee.rich small {
+  color: var(--text-secondary);
+  font-size: 11px;
+}
+
+.unassigned {
+  color: var(--text-muted);
+  font-weight: 700;
+}
+
+.sla-indicator {
+  min-width: 98px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sla-bar {
+  flex: 1;
+  min-width: 58px;
+  height: 6px;
+  border-radius: 999px;
+  background: #e5e7eb;
+  overflow: hidden;
+}
+
+.sla-fill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--success);
+}
+
+.sla-fill.warning {
+  background: var(--warning);
+}
+
+.sla-fill.critical {
+  background: var(--danger);
+}
+
+.sla-indicator > span:last-child {
+  width: 50px;
+  color: var(--text-secondary);
+  font-size: 12px;
+  font-weight: 800;
+  text-align: right;
+}
+
+.row-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.row-actions button {
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background: #fff;
+  color: var(--text-secondary);
+  font-weight: 800;
+}
+
+.row-actions button:hover {
+  color: var(--primary-blue);
+  border-color: #bfdbfe;
+  background: #eff6ff;
+}
+
+.table-footer {
+  padding: 13px 16px;
+  color: var(--text-secondary);
+  border-top: 1px solid var(--border-color);
+}
+
+@media (max-width: 1100px) {
+  .stats-row {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .incident-toolbar {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .toolbar-right {
+    justify-content: space-between;
+  }
+}
+
+@media (max-width: 700px) {
+  .stats-row {
+    grid-template-columns: 1fr;
+  }
+}

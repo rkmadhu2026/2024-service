@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Monitoring & SSO Integration - LinkedEye Platform</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+            padding: 20px;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+        }
+
+        h1 {
+            color: #1976D2;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2.8em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 40px;
+            font-size: 1.3em;
+        }
+
+        h2 {
+            color: #1976D2;
+            margin-top: 40px;
+            margin-bottom: 25px;
+            border-bottom: 4px solid #2196F3;
+            padding-bottom: 12px;
+            font-size: 2em;
+        }
+
+        h3 {
+            color: #424242;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+
+        h4 {
+            color: #666;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        .hero-banner {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 15px;
+            margin-bottom: 40px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+        }
+
+        .hero-banner h2 {
+            color: white;
+            border: none;
+            margin: 0 0 20px 0;
+            padding: 0;
+        }
+
+        .hero-banner ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .hero-banner li {
+            padding: 8px 0;
+            font-size: 1.1em;
+        }
+
+        .hero-banner li::before {
+            content: "✓ ";
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .card {
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 25px;
+            background: #fafafa;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            border-color: #2196F3;
+        }
+
+        .card-critical {
+            border-left: 5px solid #f44336;
+            background: linear-gradient(135deg, #FFEBEE 0%, #FFCDD2 100%);
+        }
+
+        .card-warning {
+            border-left: 5px solid #FF9800;
+            background: linear-gradient(135deg, #FFF3E0 0%, #FFE0B2 100%);
+        }
+
+        .card-success {
+            border-left: 5px solid #4CAF50;
+            background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%);
+        }
+
+        .card-info {
+            border-left: 5px solid #2196F3;
+            background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%);
+        }
+
+        .card h3 {
+            margin-top: 0;
+            color: #1976D2;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .icon {
+            font-size: 1.5em;
+        }
+
+        .monitoring-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .monitoring-table thead {
+            background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%);
+            color: white;
+        }
+
+        .monitoring-table th {
+            padding: 18px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 1.05em;
+        }
+
+        .monitoring-table td {
+            padding: 15px 18px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .monitoring-table tbody tr:hover {
+            background: #f5f5f5;
+        }
+
+        .monitoring-table tbody tr:nth-child(even) {
+            background: #fafafa;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            font-weight: 600;
+            margin: 2px;
+        }
+
+        .badge-enabled {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .badge-partial {
+            background: #FF9800;
+            color: white;
+        }
+
+        .badge-missing {
+            background: #f44336;
+            color: white;
+        }
+
+        .badge-recommended {
+            background: #2196F3;
+            color: white;
+        }
+
+        .code-block {
+            background: #263238;
+            color: #aed581;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+            line-height: 1.6;
+            border-left: 4px solid #4CAF50;
+        }
+
+        .code-block .comment {
+            color: #78909c;
+        }
+
+        .code-block .key {
+            color: #80cbc4;
+        }
+
+        .code-block .value {
+            color: #ffab91;
+        }
+
+        .architecture-diagram {
+            background: #f8f9fa;
+            border: 3px solid #2196F3;
+            border-radius: 12px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+
+        .flow-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .flow-node {
+            padding: 15px 25px;
+            border-radius: 10px;
+            font-weight: 600;
+            text-align: center;
+            min-width: 180px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .flow-node:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        }
+
+        .flow-node.device {
+            background: linear-gradient(135deg, #FF6B6B 0%, #C92A2A 100%);
+            color: white;
+        }
+
+        .flow-node.exporter {
+            background: linear-gradient(135deg, #4ECDC4 0%, #44A1A0 100%);
+            color: white;
+        }
+
+        .flow-node.prometheus {
+            background: linear-gradient(135deg, #E85D4C 0%, #D63447 100%);
+            color: white;
+        }
+
+        .flow-node.grafana {
+            background: linear-gradient(135deg, #FF9800 0%, #F57C00 100%);
+            color: white;
+        }
+
+        .flow-node.alert {
+            background: linear-gradient(135deg, #9C27B0 0%, #7B1FA2 100%);
+            color: white;
+        }
+
+        .flow-arrow {
+            font-size: 2em;
+            color: #1976D2;
+            font-weight: bold;
+        }
+
+        .alert-box {
+            background: #FFF3E0;
+            border-left: 5px solid #FF9800;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .alert-box.critical {
+            background: #FFEBEE;
+            border-left-color: #f44336;
+        }
+
+        .alert-box.success {
+            background: #E8F5E9;
+            border-left-color: #4CAF50;
+        }
+
+        .alert-box h4 {
+            margin-top: 0;
+            color: #E65100;
+        }
+
+        .alert-box.critical h4 {
+            color: #C62828;
+        }
+
+        .alert-box.success h4 {
+            color: #2E7D32;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .feature-card {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            border-color: #2196F3;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(33, 150, 243, 0.3);
+        }
+
+        .feature-card .icon {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+
+        .feature-card h4 {
+            color: #1976D2;
+            margin: 10px 0;
+        }
+
+        .sso-flow {
+            background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%);
+            padding: 30px;
+            border-radius: 12px;
+            margin: 30px 0;
+            border: 3px solid #2196F3;
+        }
+
+        .integration-matrix {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 25px 0;
+        }
+
+        .integration-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border: 2px solid #e0e0e0;
+            text-align: center;
+        }
+
+        .integration-item.integrated {
+            border-color: #4CAF50;
+            background: #E8F5E9;
+        }
+
+        .integration-item.pending {
+            border-color: #FF9800;
+            background: #FFF3E0;
+        }
+
+        ul.checklist {
+            list-style: none;
+            padding: 0;
+        }
+
+        ul.checklist li {
+            padding: 10px 0;
+            padding-left: 30px;
+            position: relative;
+        }
+
+        ul.checklist li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #4CAF50;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        ul.checklist li.pending::before {
+            content: "○";
+            color: #FF9800;
+        }
+
+        ul.checklist li.critical::before {
+            content: "!";
+            color: #f44336;
+        }
+
+        .section-divider {
+            height: 4px;
+            background: linear-gradient(90deg, #2196F3 0%, #4CAF50 50%, #FF9800 100%);
+            margin: 50px 0;
+            border-radius: 2px;
+        }
+
+        @media (max-width: 768px) {
+            .grid-2, .grid-3 {
+                grid-template-columns: 1fr;
+            }
+            
+            .flow-row {
+                flex-direction: column;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔐 Advanced Monitoring & SSO Integration</h1>
+        <p class="subtitle">LinkedEye Platform - Enterprise-Grade Observability & Authentication</p>
+
+        <div class="hero-banner">
+            <h2>📊 Complete Infrastructure Visibility</h2>
+            <ul>
+                <li><strong>Hardware Monitoring:</strong> iLO, iDRAC, BMC controllers</li>
+                <li><strong>Network Devices:</strong> Firewalls, switches, routers</li>
+                <li><strong>Application Performance:</strong> Distributed tracing, APM</li>
+                <li><strong>Unified Authentication:</strong> Keycloak SSO across all platforms</li>
+                <li><strong>GitOps CI/CD:</strong> Jenkins + ArgoCD integration</li>
+            </ul>
+        </div>
+
+        <h2>🔐 1. Keycloak SSO Architecture</h2>
+
+        <div class="card card-info">
+            <h3><span class="icon">🔑</span> Keycloak Overview</h3>
+            <p><strong>Role:</strong> Centralized authentication and authorization for all LinkedEye platform components</p>
+            <p><strong>Protocol:</strong> OAuth 2.0, OpenID Connect (OIDC), SAML 2.0</p>
+            <p><strong>Deployment:</strong> High Availability with PostgreSQL backend</p>
+        </div>
+
+        <h3>Keycloak Integration Map</h3>
+
+        <div class="integration-matrix">
+            <div class="integration-item integrated">
+                <div class="icon">📊</div>
+                <h4>Grafana</h4>
+                <span class="badge badge-enabled">OAuth2 Enabled</span>
+            </div>
+            <div class="integration-item integrated">
+                <div class="icon">🔨</div>
+                <h4>Jenkins</h4>
+                <span class="badge badge-enabled">OIDC Enabled</span>
+            </div>
+            <div class="integration-item integrated">
+                <div class="icon">🚀</div>
+                <h4>ArgoCD</h4>
+                <span class="badge badge-enabled">OIDC/SAML</span>
+            </div>
+            <div class="integration-item integrated">
+                <div class="icon">⚡</div>
+                <h4>StackStorm</h4>
+                <span class="badge badge-enabled">LDAP Proxy</span>
+            </div>
+            <div class="integration-item integrated">
+                <div class="icon">🔍</div>
+                <h4>Jaeger</h4>
+                <span class="badge badge-enabled">OAuth2</span>
+            </div>
+            <div class="integration-item integrated">
+                <div class="icon">📝</div>
+                <h4>Kibana</h4>
+                <span class="badge badge-enabled">SAML 2.0</span>
+            </div>
+            <div class="integration-item integrated">
+                <div class="icon">🔥</div>
+                <h4>Prometheus</h4>
+                <span class="badge badge-partial">Basic Auth</span>
+            </div>
+            <div class="integration-item pending">
+                <div class="icon">🎯</div>
+                <h4>AlertManager</h4>
+                <span class="badge badge-partial">Via Grafana</span>
+            </div>
+        </div>
+
+        <div class="sso-flow">
+            <h3>SSO Authentication Flow</h3>
+            <div class="flow-row">
+                <div class="flow-node" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">User Browser</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-node grafana">Application (Grafana/Jenkins)</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-node" style="background: linear-gradient(135deg, #4CAF50 0%, #388E3C 100%); color: white;">Keycloak SSO</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-node" style="background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%); color: white;">LDAP/AD Backend</div>
+            </div>
+            <div style="text-align: center; margin-top: 20px;">
+                <p><strong>↓ Access Token (JWT) ↓</strong></p>
+                <div class="flow-node" style="background: linear-gradient(135deg, #E91E63 0%, #C2185B 100%); color: white; display: inline-block;">Authorized Access to Platform</div>
+            </div>
+        </div>
+
+        <h3>Grafana OAuth2 Configuration</h3>
+        <div class="code-block">
+<span class="comment"># grafana.ini - Keycloak OAuth Integration</span>
+[auth.generic_oauth]
+<span class="key">enabled</span> = <span class="value">true</span>
+<span class="key">name</span> = <span class="value">Keycloak</span>
+<span class="key">allow_sign_up</span> = <span class="value">true</span>
+<span class="key">client_id</span> = <span class="value">grafana-client</span>
+<span class="key">client_secret</span> = <span class="value">$__file{/etc/secrets/grafana-oauth-secret}</span>
+<span class="key">scopes</span> = <span class="value">openid profile email</span>
+<span class="key">auth_url</span> = <span class="value">https://keycloak.linkedeye.local/realms/linkedeye/protocol/openid-connect/auth</span>
+<span class="key">token_url</span> = <span class="value">https://keycloak.linkedeye.local/realms/linkedeye/protocol/openid-connect/token</span>
+<span class="key">api_url</span> = <span class="value">https://keycloak.linkedeye.local/realms/linkedeye/protocol/openid-connect/userinfo</span>
+<span class="key">role_attribute_path</span> = <span class="value">contains(groups[*], 'grafana-admin') && 'Admin' || 'Viewer'</span>
+        </div>
+
+        <h3>Jenkins OIDC Configuration</h3>
+        <div class="code-block">
+<span class="comment"># Jenkins Configuration as Code (JCasC)</span>
+<span class="key">jenkins:</span>
+  <span class="key">securityRealm:</span>
+    <span class="key">oic:</span>
+      <span class="key">clientId:</span> <span class="value">"jenkins-client"</span>
+      <span class="key">clientSecret:</span> <span class="value">"${JENKINS_OIDC_SECRET}"</span>
+      <span class="key">wellKnownOpenIDConfigurationUrl:</span> <span class="value">"https://keycloak.linkedeye.local/realms/linkedeye/.well-known/openid-configuration"</span>
+      <span class="key">tokenFieldToCheckKey:</span> <span class="value">"email"</span>
+      <span class="key">fullNameFieldName:</span> <span class="value">"name"</span>
+      <span class="key">groupsFieldName:</span> <span class="value">"groups"</span>
+      <span class="key">userNameField:</span> <span class="value">"preferred_username"</span>
+  
+  <span class="key">authorizationStrategy:</span>
+    <span class="key">roleBased:</span>
+      <span class="key">roles:</span>
+        <span class="key">global:</span>
+          - <span class="key">name:</span> <span class="value">"admin"</span>
+            <span class="key">pattern:</span> <span class="value">".*"</span>
+            <span class="key">permissions:</span>
+              - <span class="value">"Overall/Administer"</span>
+            <span class="key">assignments:</span>
+              - <span class="value">"jenkins-admins"</span>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <h2>🖥️ 2. Advanced Hardware Monitoring</h2>
+
+        <div class="alert-box critical">
+            <h4>⚠️ Critical Issue: iLO SSL Handshake Timeout</h4>
+            <p><strong>Current Problem:</strong> iLO exporters experiencing SSL handshake timeouts affecting hardware monitoring</p>
+            <p><strong>Impact:</strong> Missing temperature, power, and health metrics from physical servers</p>
+            <p><strong>Root Cause:</strong> Certificate validation issues + iLO firmware compatibility</p>
+        </div>
+
+        <h3>Hardware Monitoring Matrix</h3>
+
+        <table class="monitoring-table">
+            <thead>
+                <tr>
+                    <th>Device Type</th>
+                    <th>Monitoring Tool</th>
+                    <th>Metrics Collected</th>
+                    <th>Status</th>
+                    <th>Protocol</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>HPE iLO</strong></td>
+                    <td>iLO Exporter</td>
+                    <td>Temperature, Power, Fan Speed, Health, Firmware</td>
+                    <td><span class="badge badge-partial">Partial (SSL Issue)</span></td>
+                    <td>HTTPS/Redfish API</td>
+                </tr>
+                <tr>
+                    <td><strong>Dell iDRAC</strong></td>
+                    <td>iDRAC Exporter</td>
+                    <td>Temperature, PSU, Storage, RAID, System Health</td>
+                    <td><span class="badge badge-enabled">Enabled</span></td>
+                    <td>HTTPS/Redfish API</td>
+                </tr>
+                <tr>
+                    <td><strong>Generic BMC</strong></td>
+                    <td>IPMI Exporter</td>
+                    <td>Sensors, Power State, SEL Logs</td>
+                    <td><span class="badge badge-enabled">Enabled</span></td>
+                    <td>IPMI over LAN</td>
+                </tr>
+                <tr>
+                    <td><strong>Network Switches</strong></td>
+                    <td>SNMP Exporter</td>
+                    <td>Interface Stats, Errors, Bandwidth, VLANs</td>
+                    <td><span class="badge badge-enabled">Enabled</span></td>
+                    <td>SNMPv2c/v3</td>
+                </tr>
+                <tr>
+                    <td><strong>Firewalls</strong></td>
+                    <td>SNMP + Syslog</td>
+                    <td>Connection Count, Throughput, Rules, Threats</td>
+                    <td><span class="badge badge-enabled">Enabled</span></td>
+                    <td>SNMP + Syslog</td>
+                </tr>
+                <tr>
+                    <td><strong>Routers</strong></td>
+                    <td>Router Exporter</td>
+                    <td>BGP, OSPF, Interface Stats, Routing Tables</td>
+                    <td><span class="badge badge-enabled">Enabled</span></td>
+                    <td>SNMP/SSH</td>
+                </tr>
+                <tr>
+                    <td><strong>UPS Systems</strong></td>
+                    <td>NUT Exporter</td>
+                    <td>Battery Level, Load, Runtime, Input Voltage</td>
+                    <td><span class="badge badge-recommended">Recommended</span></td>
+                    <td>Network UPS Tools</td>
+                </tr>
+                <tr>
+                    <td><strong>Storage Arrays</strong></td>
+                    <td>Vendor Exporters</td>
+                    <td>Disk Health, IOPS, Latency, Capacity</td>
+                    <td><span class="badge badge-missing">Missing</span></td>
+                    <td>Vendor API</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>📡 Network Device Monitoring Architecture</h3>
+
+        <div class="architecture-diagram">
+            <h4 style="text-align: center; margin-bottom: 25px;">End-to-End Monitoring Flow</h4>
+            
+            <div class="flow-row">
+                <div class="flow-node device">Firewall<br/>(Fortinet/Palo Alto)</div>
+                <div class="flow-node device">Core Switch<br/>(Cisco/Arista)</div>
+                <div class="flow-node device">Edge Router<br/>(Juniper/Cisco)</div>
+                <div class="flow-node device">iLO/iDRAC<br/>(HP/Dell Servers)</div>
+            </div>
+            
+            <div style="text-align: center; margin: 20px 0;">
+                <div class="flow-arrow">↓ ↓ ↓ ↓</div>
+                <p><strong>SNMP v2c/v3 | Syslog | HTTPS/Redfish</strong></p>
+            </div>
+            
+            <div class="flow-row">
+                <div class="flow-node exporter">SNMP Exporter</div>
+                <div class="flow-node exporter">Blackbox Exporter</div>
+                <div class="flow-node exporter">iLO Exporter</div>
+                <div class="flow-node exporter">iDRAC Exporter</div>
+            </div>
+            
+            <div style="text-align: center; margin: 20px 0;">
+                <div class="flow-arrow">↓</div>
+                <p><strong>Metrics Scraping (15s interval)</strong></p>
+            </div>
+            
+            <div class="flow-row">
+                <div class="flow-node prometheus">Prometheus<br/>(HA Cluster)</div>
+            </div>
+            
+            <div style="text-align: center; margin: 20px 0;">
+                <div class="flow-arrow">↓ ↓</div>
+            </div>
+            
+            <div class="flow-row">
+                <div class="flow-node grafana">Grafana<br/>(Visualization)</div>
+                <div class="flow-node alert">AlertManager<br/>(Alerting)</div>
+            </div>
+            
+            <div style="text-align: center; margin: 20px 0;">
+                <div class="flow-arrow">↓</div>
+            </div>
+            
+            <div class="flow-row">
+                <div class="flow-node" style="background: linear-gradient(135deg, #9C27B0 0%, #7B1FA2 100%); color: white;">
+                    StackStorm/Argo<br/>(Auto-Remediation)
+                </div>
+                <div class="flow-node" style="background: linear-gradient(135deg, #FF5722 0%, #E64A19 100%); color: white;">
+                    Apprise/PagerDuty<br/>(Notifications)
+                </div>
+            </div>
+        </div>
+
+        <h3>🔧 iLO Monitoring - Troubleshooting Guide</h3>
+
+        <div class="grid-2">
+            <div class="card card-warning">
+                <h3><span class="icon">⚠️</span> Common iLO Issues</h3>
+                <ul>
+                    <li><strong>SSL Handshake Timeout</strong>
+                        <ul>
+                            <li>Outdated iLO firmware (< 2.70)</li>
+                            <li>TLS 1.0/1.1 disabled in exporter</li>
+                            <li>Self-signed certificate rejection</li>
+                            <li>Network firewall blocking</li>
+                        </ul>
+                    </li>
+                    <li><strong>Authentication Failures</strong>
+                        <ul>
+                            <li>Account lockout after failed attempts</li>
+                            <li>Insufficient privileges (need Administrator)</li>
+                            <li>Password expiry</li>
+                        </ul>
+                    </li>
+                    <li><strong>Performance Issues</strong>
+                        <ul>
+                            <li>Too frequent scraping (< 30s)</li>
+                            <li>Multiple concurrent connections</li>
+                            <li>iLO resource exhaustion</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="card card-success">
+                <h3><span class="icon">✅</span> Solutions & Best Practices</h3>
+                <ul class="checklist">
+                    <li><strong>Upgrade iLO Firmware:</strong> Minimum version 2.70+ for TLS 1.2 support</li>
+                    <li><strong>Certificate Management:</strong>
+                        <ul>
+                            <li>Use <code>insecure_skip_verify: true</code> for testing</li>
+                            <li>Deploy CA certificates for production</li>
+                            <li>Consider iLO certificate replacement</li>
+                        </ul>
+                    </li>
+                    <li><strong>Optimize Scrape Intervals:</strong>
+                        <ul>
+                            <li>Hardware metrics: 60s (not 15s)</li>
+                            <li>Critical alerts: 30s</li>
+                            <li>Use separate scrape configs</li>
+                        </ul>
+                    </li>
+                    <li><strong>Connection Pooling:</strong> Configure exporter with connection reuse</li>
+                    <li><strong>Dedicated Service Account:</strong> Read-only iLO user with specific privileges</li>
+                </ul>
+            </div>
+        </div>
+
+        <h3>iLO Exporter Configuration Example</h3>
+        <div class="code-block">
+<span class="comment"># prometheus.yml - iLO Scrape Configuration</span>
+<span class="key">scrape_configs:</span>
+  - <span class="key">job_name:</span> <span class="value">'ilo-exporter'</span>
+    <span class="key">scrape_interval:</span> <span class="value">60s</span>
+    <span class="key">scrape_timeout:</span> <span class="value">45s</span>
+    <span class="key">metrics_path:</span> <span class="value">/metrics</span>
+    <span class="key">static_configs:</span>
+      - <span class="key">targets:</span>
+          - <span class="value">ilo-exporter:9416</span>
+
+<span class="comment"># iLO Exporter - Environment Variables</span>
+<span class="key">ILO_HOST:</span> <span class="value">"192.168.1.10"</span>
+<span class="key">ILO_PORT:</span> <span class="value">"443"</span>
+<span class="key">ILO_USER:</span> <span class="value">"monitoring"</span>
+<span class="key">ILO_PASSWORD:</span> <span class="value">"${ILO_PASSWORD}"</span>
+<span class="key">INSECURE_SKIP_VERIFY:</span> <span class="value">"true"</span>   <span class="comment"># For self-signed certs</span>
+<span class="key">TIMEOUT:</span> <span class="value">"30s"</span>
+<span class="key">TLS_MIN_VERSION:</span> <span class="value">"1.2"</span>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <h2>🌐 3. Network Device Monitoring - Deep Dive</h2>
+
+        <div class="grid-3">
+            <div class="card card-info">
+                <h3><span class="icon">🔥</span> Firewall Monitoring</h3>
+                <h4>Metrics to Track:</h4>
+                <ul>
+                    <li>Session count & utilization</li>
+                    <li>Bandwidth per interface</li>
+                    <li>Threat detections & blocks</li>
+                    <li>VPN tunnel status</li>
+                    <li>CPU/Memory usage</li>
+                    <li>Failed authentication attempts</li>
+                </ul>
+                <h4>Tools:</h4>
+                <ul class="checklist">
+                    <li>SNMP Exporter (sysDescr, ifTable)</li>
+                    <li>Syslog to Loki/ELK</li>
+                    <li>Vendor-specific exporters (Palo Alto, Fortinet)</li>
+                </ul>
+            </div>
+
+            <div class="card card-info">
+                <h3><span class="icon">🔀</span> Switch Monitoring</h3>
+                <h4>Metrics to Track:</h4>
+                <ul>
+                    <li>Port status (up/down/admin down)</li>
+                    <li>Interface errors (CRC, collisions)</li>
+                    <li>Bandwidth utilization per port</li>
+                    <li>STP topology changes</li>
+                    <li>VLAN configuration</li>
+                    <li>Power over Ethernet (PoE) usage</li>
+                </ul>
+                <h4>Tools:</h4>
+                <ul class="checklist">
+                    <li>SNMP Exporter with custom modules</li>
+                    <li>Blackbox for link testing</li>
+                    <li>Cisco/Arista telemetry streaming</li>
+                </ul>
+            </div>
+
+            <div class="card card-info">
+                <h3><span class="icon">🛤️</span> Router Monitoring</h3>
+                <h4>Metrics to Track:</h4>
+                <ul>
+                    <li>BGP peer status & routes</li>
+                    <li>OSPF neighbor states</li>
+                    <li>Routing table size</li>
+                    <li>Interface packet rates</li>
+                    <li>QoS statistics</li>
+                    <li>Prefix announcements</li>
+                </ul>
+                <h4>Tools:</h4>
+                <ul class="checklist">
+                    <li>Router Exporter (BGP/OSPF)</li>
+                    <li>SNMP Exporter</li>
+                    <li>NetFlow/sFlow collectors</li>
+                </ul>
+            </div>
+        </div>
+
+        <h3>SNMP Exporter Configuration for Network Devices</h3>
+
+        <div class="code-block">
+<span class="comment"># snmp.yml - Custom SNMP Module for Cisco Switches</span>
+<span class="key">modules:</span>
+  <span class="key">cisco_switch:</span>
+    <span class="key">walk:</span>
+      - <span class="value">1.3.6.1.2.1.1</span>           <span class="comment"># System Info</span>
+      - <span class="value">1.3.6.1.2.1.2</span>           <span class="comment"># Interfaces</span>
+      - <span class="value">1.3.6.1.2.1.31</span>          <span class="comment"># Interface Extended Stats</span>
+      - <span class="value">1.3.6.1.4.1.9.9.46</span>      <span class="comment"># Cisco VLANs</span>
+      - <span class="value">1.3.6.1.4.1.9.9.48</span>      <span class="comment"># Cisco Port Security</span>
+    <span class="key">version:</span> <span class="value">2</span>
+    <span class="key">auth:</span>
+      <span class="key">community:</span> <span class="value">linkedeye_readonly</span>
+
+  <span class="key">palo_alto_firewall:</span>
+    <span class="key">walk:</span>
+      - <span class="value">1.3.6.1.4.1.25461.2.1.2.1</span>  <span class="comment"># PA Sessions</span>
+      - <span class="value">1.3.6.1.4.1.25461.2.1.2.3</span>  <span class="comment"># PA Throughput</span>
+    <span class="key">version:</span> <span class="value">2</span>
+    <span class="key">auth:</span>
+      <span class="key">community:</span> <span class="value">linkedeye_readonly</span>
+        </div>
+
+        <div class="code-block">
+<span class="comment"># prometheus.yml - SNMP Scrape Configs</span>
+<span class="key">scrape_configs:</span>
+  - <span class="key">job_name:</span> <span class="value">'snmp-switches'</span>
+    <span class="key">scrape_interval:</span> <span class="value">30s</span>
+    <span class="key">static_configs:</span>
+      - <span class="key">targets:</span>
+          - <span class="value">192.168.1.1</span>   <span class="comment"># Core Switch 1</span>
+          - <span class="value">192.168.1.2</span>   <span class="comment"># Core Switch 2</span>
+          - <span class="value">192.168.1.3</span>   <span class="comment"># Edge Switch</span>
+    <span class="key">metrics_path:</span> <span class="value">/snmp</span>
+    <span class="key">params:</span>
+      <span class="key">module:</span> [<span class="value">cisco_switch</span>]
+    <span class="key">relabel_configs:</span>
+      - <span class="key">source_labels:</span> [<span class="value">__address__</span>]
+        <span class="key">target_label:</span> <span class="value">__param_target</span>
+      - <span class="key">source_labels:</span> [<span class="value">__param_target</span>]
+        <span class="key">target_label:</span> <span class="value">instance</span>
+      - <span class="key">target_label:</span> <span class="value">__address__</span>
+        <span class="key">replacement:</span> <span class="value">snmp-exporter:9116</span>
+
+  - <span class="key">job_name:</span> <span class="value">'snmp-firewalls'</span>
+    <span class="key">scrape_interval:</span> <span class="value">30s</span>
+    <span class="key">static_configs:</span>
+      - <span class="key">targets:</span>
+          - <span class="value">192.168.100.1</span>  <span class="comment"># Primary Firewall</span>
+          - <span class="value">192.168.100.2</span>  <span class="comment"># Secondary Firewall</span>
+    <span class="key">metrics_path:</span> <span class="value">/snmp</span>
+    <span class="key">params:</span>
+      <span class="key">module:</span> [<span class="value">palo_alto_firewall</span>]
+    <span class="key">relabel_configs:</span>
+      <span class="comment"># Same as above</span>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <h2>🚀 4. CI/CD Integration with SSO</h2>
+
+        <div class="grid-2">
+            <div class="card card-info">
+                <h3><span class="icon">🔨</span> Jenkins Architecture</h3>
+                <h4>Current Setup:</h4>
+                <ul class="checklist">
+                    <li><strong>Jenkins Master:</strong> Single controller pod</li>
+                    <li><strong>Dynamic Agents:</strong> Kubernetes plugin for ephemeral build pods</li>
+                    <li><strong>Authentication:</strong> Keycloak OIDC</li>
+                    <li><strong>Authorization:</strong> Role-based (jenkins-admins, jenkins-users)</li>
+                </ul>
+                <h4>Pipeline Integration:</h4>
+                <ul>
+                    <li>Build → Test → Container Image</li>
+                    <li>Push to registry (Harbor/ECR)</li>
+                    <li>Trigger ArgoCD sync (GitOps)</li>
+                    <li>Notify via Apprise/Slack</li>
+                </ul>
+            </div>
+
+            <div class="card card-success">
+                <h3><span class="icon">🚀</span> ArgoCD Architecture</h3>
+                <h4>Recommended Setup:</h4>
+                <ul class="checklist">
+                    <li><strong>ArgoCD Server:</strong> HA deployment (3 replicas)</li>
+                    <li><strong>Authentication:</strong> Keycloak OIDC/SAML</li>
+                    <li><strong>RBAC:</strong> Project-based access control</li>
+                    <li><strong>Git Repos:</strong> LinkedEye platform manifests</li>
+                </ul>
+                <h4>GitOps Workflow:</h4>
+                <ul>
+                    <li>Developers push code → Jenkins CI</li>
+                    <li>Jenkins builds image → Updates K8s manifests</li>
+                    <li>ArgoCD detects change → Auto-sync to cluster</li>
+                    <li>Health checks → Rollback on failure</li>
+                </ul>
+            </div>
+        </div>
+
+        <h3>Jenkins → ArgoCD Integration Pipeline</h3>
+
+        <div class="code-block">
+<span class="comment">// Jenkinsfile - CI/CD Pipeline with ArgoCD</span>
+<span class="key">pipeline</span> {
+    <span class="key">agent</span> {
+        <span class="key">kubernetes</span> {
+            <span class="key">yaml</span> <span class="value">"""
+apiVersion: v1
+kind: Pod
+spec:
+  containers:
+  - name: docker
+    image: docker:latest
+    command: ['cat']
+    tty: true
+  - name: kubectl
+    image: bitnami/kubectl:latest
+    command: ['cat']
+    tty: true
+            """</span>
+        }
+    }
+    
+    <span class="key">stages</span> {
+        <span class="key">stage</span>(<span class="value">'Build'</span>) {
+            <span class="key">steps</span> {
+                container(<span class="value">'docker'</span>) {
+                    sh <span class="value">'docker build -t linkedeye/le-backend:${BUILD_NUMBER} .'</span>
+                    sh <span class="value">'docker push linkedeye/le-backend:${BUILD_NUMBER}'</span>
+                }
+            }
+        }
+        
+        <span class="key">stage</span>(<span class="value">'Update Manifests'</span>) {
+            <span class="key">steps</span> {
+                <span class="comment">// Update K8s manifest in Git repo</span>
+                sh <span class="value">"""
+                    git clone https://github.com/linkedeye/k8s-manifests
+                    cd k8s-manifests/platform/le-backend
+                    sed -i 's|image:.*|image: linkedeye/le-backend:${BUILD_NUMBER}|' deployment.yaml
+                    git commit -am 'Update image to ${BUILD_NUMBER}'
+                    git push
+                """</span>
+            }
+        }
+        
+        <span class="key">stage</span>(<span class="value">'Trigger ArgoCD Sync'</span>) {
+            <span class="key">steps</span> {
+                container(<span class="value">'kubectl'</span>) {
+                    sh <span class="value">"""
+                        argocd app sync le-backend --auth-token ${ARGOCD_TOKEN}
+                        argocd app wait le-backend --health
+                    """</span>
+                }
+            }
+        }
+    }
+    
+    <span class="key">post</span> {
+        <span class="key">success</span> {
+            <span class="comment">// Notify via Apprise</span>
+            sh <span class="value">'curl -X POST http://apprise-notify/notify -d "Build ${BUILD_NUMBER} deployed successfully"'</span>
+        }
+    }
+}
+        </div>
+
+        <div class="section-divider"></div>
+
+        <h2>📊 5. Advanced Grafana Dashboards</h2>
+
+        <div class="feature-grid">
+            <div class="feature-card">
+                <div class="icon">🖥️</div>
+                <h4>Infrastructure Overview</h4>
+                <p>Cluster health, node metrics, pod status</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon">🔌</div>
+                <h4>Hardware Health</h4>
+                <p>iLO/iDRAC temps, power, fan speeds</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon">🌐</div>
+                <h4>Network Devices</h4>
+                <p>Switch ports, firewall sessions, bandwidth</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon">💹</div>
+                <h4>Trading Platform</h4>
+                <p>NSE/BSE/NSEFO metrics, order latency</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon">⚡</div>
+                <h4>Application Performance</h4>
+                <p>Request rates, latency, error rates</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon">🔍</div>
+                <h4>Distributed Tracing</h4>
+                <p>Jaeger traces, service dependencies</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon">💾</div>
+                <h4>Database Metrics</h4>
+                <p>MySQL/Postgres/MongoDB/Redis stats</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon">🔔</div>
+                <h4>Alert Status</h4>
+                <p>Active alerts, firing rules, silences</p>
+            </div>
+        </div>
+
+        <div class="alert-box success">
+            <h4>✅ Grafana Best Practices for LinkedEye</h4>
+            <ul class="checklist">
+                <li><strong>Unified Authentication:</strong> Keycloak OAuth2 for SSO across all teams</li>
+                <li><strong>Team Dashboards:</strong> Separate folders for DevOps, Trading, Network teams</li>
+                <li><strong>Alert Annotations:</strong> Automatic annotations on graphs when alerts fire</li>
+                <li><strong>Variable Templating:</strong> Dynamic dashboards with cluster/namespace selection</li>
+                <li><strong>Datasource Correlation:</strong> Link Prometheus metrics with Loki logs and Jaeger traces</li>
+                <li><strong>High Availability:</strong> Multiple Grafana replicas with shared database</li>
+            </ul>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <h2>🎯 6. Implementation Roadmap</h2>
+
+        <div class="grid-2">
+            <div class="card card-success">
+                <h3>Phase 1: Foundation (Weeks 1-4)</h3>
+                <ul class="checklist">
+                    <li>Deploy Keycloak HA cluster</li>
+                    <li>Configure Grafana OAuth2</li>
+                    <li>Setup Jenkins OIDC</li>
+                    <li>Fix iLO SSL handshake issues</li>
+                    <li>Deploy Jaeger with ES backend</li>
+                    <li>Deploy OpenTelemetry Collector</li>
+                </ul>
+            </div>
+
+            <div class="card card-warning">
+                <h3>Phase 2: Integration (Weeks 5-8)</h3>
+                <ul class="checklist">
+                    <li>ArgoCD deployment with SSO</li>
+                    <li>Jenkins → ArgoCD pipeline</li>
+                    <li>Complete SNMP device inventory</li>
+                    <li>Instrument key services with OTel</li>
+                    <li>Create network device dashboards</li>
+                    <li>Configure iDRAC monitoring</li>
+                </ul>
+            </div>
+
+            <div class="card card-info">
+                <h3>Phase 3: Advanced (Weeks 9-12)</h3>
+                <ul class="checklist">
+                    <li>Full distributed tracing coverage</li>
+                    <li>Advanced alert correlation</li>
+                    <li>Auto-remediation workflows (Argo)</li>
+                    <li>Storage array monitoring</li>
+                    <li>UPS monitoring integration</li>
+                    <li>Complete SSO rollout</li>
+                </ul>
+            </div>
+
+            <div class="card card-critical">
+                <h3>Critical: iLO Issue Resolution</h3>
+                <ul class="checklist critical">
+                    <li>Immediate: Update iLO firmware to 2.70+</li>
+                    <li>Week 1: Deploy CA certificates</li>
+                    <li>Week 1: Configure connection pooling</li>
+                    <li>Week 2: Optimize scrape intervals (60s)</li>
+                    <li>Week 2: Dedicated monitoring account</li>
+                    <li>Week 3: Full testing and validation</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="hero-banner" style="margin-top: 40px;">
+            <h2>🎯 Final Recommendations</h2>
+            <h3>Immediate Actions (This Week):</h3>
+            <ol>
+                <li><strong>iLO SSL Fix:</strong> Update firmware, configure insecure_skip_verify temporarily</li>
+                <li><strong>Keycloak Deployment:</strong> Setup HA Keycloak with PostgreSQL</li>
+                <li><strong>Grafana SSO:</strong> Configure OAuth2 with Keycloak</li>
+            </ol>
+            
+            <h3>Short Term (This Month):</h3>
+            <ol>
+                <li><strong>Complete Network Monitoring:</strong> All firewalls, switches, routers in Prometheus</li>
+                <li><strong>Distributed Tracing:</strong> Jaeger + OpenTelemetry for BOD/EOD workflows</li>
+                <li><strong>Jenkins SSO:</strong> OIDC integration with role-based access</li>
+            </ol>
+            
+            <h3>Medium Term (This Quarter):</h3>
+            <ol>
+                <li><strong>GitOps Migration:</strong> Deploy ArgoCD, migrate critical apps</li>
+                <li><strong>Automation Modernization:</strong> POC Argo Workflows parallel to StackStorm</li>
+                <li><strong>Advanced Observability:</strong> Full tracing, correlation, auto-remediation</li>
+            </ol>
+        </div>
+    </div>
+</body>
+</html>

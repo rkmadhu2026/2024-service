@@ -1,0 +1,153 @@
+.incident-board-page .kanban-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(200px, 1fr));
+  gap: 14px;
+  align-items: start;
+}
+
+.kanban-column {
+  background: #f1f5f9;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  min-height: 280px;
+}
+
+.kanban-column--muted {
+  background: #f8fafc;
+  opacity: 0.95;
+}
+
+.kanban-column-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border-color);
+  background: #fff;
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+}
+
+.kanban-column-head h2 {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.kanban-count {
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--text-secondary);
+  background: #e2e8f0;
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+
+.kanban-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px;
+  max-height: calc(100vh - 280px);
+  overflow-y: auto;
+}
+
+.kanban-card {
+  background: #fff;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 12px;
+  cursor: pointer;
+  box-shadow: var(--shadow-card);
+  text-align: left;
+}
+
+.kanban-card:focus {
+  outline: 2px solid var(--primary-blue);
+  outline-offset: 2px;
+}
+
+.kanban-card.priority-critical {
+  border-left: 4px solid var(--danger);
+}
+
+.kanban-card.priority-high {
+  border-left: 4px solid var(--warning);
+}
+
+.kanban-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.major-pill {
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  background: #7c3aed;
+  color: #fff;
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+
+.kanban-card-title {
+  display: block;
+  font-size: 13px;
+  line-height: 1.35;
+  margin-bottom: 10px;
+}
+
+.kanban-card-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.kanban-assignee {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--primary-blue);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 800;
+  display: grid;
+  place-items: center;
+}
+
+.kanban-move {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.kanban-move select {
+  padding: 6px 8px;
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  font-weight: 600;
+}
+
+.kanban-card--done {
+  opacity: 0.88;
+}
+
+@media (max-width: 1200px) {
+  .incident-board-page .kanban-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .incident-board-page .kanban-grid {
+    grid-template-columns: 1fr;
+  }
+}

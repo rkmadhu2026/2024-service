@@ -1,0 +1,310 @@
+/* ═══════════════════════════════════════════════
+   Dashboard Overview — Luxury Editorial Style
+═══════════════════════════════════════════════ */
+
+.dash-loading {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    color: var(--gold);
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.dash-overview {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+/* ── Header ──────────────────────────────── */
+.dash-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 24px;
+}
+
+.dash-title {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--cream);
+    letter-spacing: -0.5px;
+    margin-bottom: 8px;
+    line-height: 1.1;
+}
+
+.dash-subtitle {
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+.dash-header-actions {
+    display: flex;
+    gap: 12px;
+}
+
+/* ── Stats Grid ──────────────────────────── */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+    margin-bottom: 32px;
+}
+
+.stat-card {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s;
+}
+
+.stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(201, 169, 110, 0.2);
+}
+
+.stat-card__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.stat-card__title {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.stat-card__body {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.stat-card__value {
+    font-family: 'Playfair Display', serif;
+    font-size: 48px;
+    font-weight: 700;
+    color: var(--cream);
+    line-height: 1;
+}
+
+.stat-card__trend {
+    font-size: 12px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.trend-arrow {
+    font-size: 14px;
+}
+
+.stat-card__foot {
+    margin-top: auto;
+    font-size: 12px;
+    color: var(--text-muted);
+    padding-top: 16px;
+    border-top: 1px solid rgba(245, 240, 232, 0.05);
+}
+
+/* Colors for specific trends/text */
+.color-danger  { color: var(--danger); }
+.color-warning { color: var(--warning); }
+.color-success { color: var(--success); }
+.color-gold    { color: var(--gold); }
+.bg-success { background: var(--success); }
+.bg-warning { background: var(--warning); }
+.bg-info    { background: var(--info); }
+
+/* ── Main Layout Grid ────────────────────── */
+.main-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 24px;
+}
+
+@media (max-width: 1024px) {
+    .main-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ── List Cards (Incidents, etc.) ────────── */
+.list-card {
+    display: flex;
+    flex-direction: column;
+}
+
+.list-card__header {
+    padding: 20px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(245, 240, 232, 0.05);
+}
+
+.list-card__title {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--cream);
+}
+
+.list-card__content {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Individual list item */
+.list-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 24px;
+    border-bottom: 1px solid rgba(245, 240, 232, 0.03);
+    transition: background 0.2s;
+}
+
+.list-item:hover {
+    background: rgba(245, 240, 232, 0.02);
+}
+
+.list-item:last-child {
+    border-bottom: none;
+}
+
+.list-item__indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.indicator-critical { background: var(--danger); box-shadow: 0 0 8px rgba(224, 82, 82, 0.6); }
+.indicator-high     { background: var(--warning); }
+.indicator-medium   { background: var(--info); }
+
+.list-item__details {
+    flex: 1;
+    min-width: 0;
+}
+
+.list-item__id {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--gold);
+    letter-spacing: 0.06em;
+    margin-bottom: 4px;
+}
+
+.list-item__msg {
+    font-size: 13.5px;
+    color: var(--cream);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.list-item__time {
+    font-size: 12px;
+    color: var(--text-muted);
+    white-space: nowrap;
+}
+
+/* ── Infra Card ──────────────────────────── */
+.infra-card {
+    display: flex;
+    flex-direction: column;
+}
+
+.infra-content {
+    padding: 32px 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+}
+
+.system-orb {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.system-orb__inner {
+    position: absolute;
+    inset: 10px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(201,169,110,0.2) 0%, rgba(201,169,110,0.05) 100%);
+    border: 1px solid rgba(201,169,110,0.3);
+}
+
+.system-orb__label {
+    position: relative;
+    z-index: 1;
+    font-family: 'Playfair Display', serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--gold);
+    text-align: center;
+    line-height: 1.2;
+}
+
+.health-metrics {
+    list-style: none;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.health-metric {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.hm-label {
+    width: 90px;
+    font-size: 11px;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.hm-bar-track {
+    flex: 1;
+    height: 4px;
+    background: rgba(245, 240, 232, 0.05);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.hm-bar-fill {
+    height: 100%;
+    border-radius: 2px;
+}
+
+.hm-val {
+    width: 45px;
+    text-align: right;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--cream);
+    font-variant-numeric: tabular-nums;
+}
