@@ -26,7 +26,7 @@ const apiRoutes = require('./routes/api');
 app.use('/api', apiRoutes);
 
 app.get('/', (req, res) => {
-    res.send('LinkedEye-FinSpot API is running');
+    res.send('ArgusTradeOps API is running');
 });
 
 if (require.main === module) {

@@ -74,10 +74,10 @@ export default function DashboardLayout() {
 
       <aside className={`dash-sidebar ${mobileOpen ? 'dash-sidebar--open' : ''}`}>
         <div className="sidebar-header">
-          <div className="sidebar-logo">LE</div>
+          <div className="sidebar-logo">AT</div>
           <div className="sidebar-brand">
-            <h1>LinkedEye</h1>
-            <span>FinSpot ITSM</span>
+            <h1>ArgusTradeOps</h1>
+            <span>System · on-prem observability · compliance · RCA</span>
           </div>
         </div>
 
@@ -105,8 +105,8 @@ export default function DashboardLayout() {
           <div className="env-selector">
             <span className="env-dot" />
             <div className="env-info">
-              <div className="env-name">Production</div>
-              <div className="env-label">fs-mum-indmoney-prod-le</div>
+              <div className="env-name">On-prem</div>
+              <div className="env-label">Trade-ops primary</div>
             </div>
             <span className="env-chevron">⌄</span>
           </div>
@@ -122,7 +122,7 @@ export default function DashboardLayout() {
             <kbd>⌘K</kbd>
           </div>
           <div className="breadcrumb-line">
-            <span>LinkedEye</span>
+            <span>ArgusTradeOps</span>
             <span>/</span>
             <strong>{currentTitle}</strong>
           </div>

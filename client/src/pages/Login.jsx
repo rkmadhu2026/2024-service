@@ -82,23 +82,23 @@ const Login = () => {
                             <circle cx="18" cy="18" r="8" fill="#C9A96E" fillOpacity="0.15"/>
                             <path d="M12 18 Q18 10 24 18 Q18 26 12 18Z" fill="#C9A96E"/>
                         </svg>
-                        <span className="l-logo__text">LinkedEye</span>
+                        <span className="l-logo__text">ArgusTradeOps</span>
                     </div>
 
                     <div className="l-divider" />
 
-                    <h1 className="l-headline">Enterprise<br/><em>Intelligence</em></h1>
+                    <h1 className="l-headline">ArgusTradeOps<br/><em>System</em></h1>
                     <p className="l-sub">
-                        The complete ITSM & infrastructure monitoring platform — built for teams that demand precision.
+                        On-prem observability · compliance · RCA. Built for trading operations and regulated infrastructure teams.
                     </p>
 
                     {/* Feature list */}
                     <div className="l-features">
                         {[
-                            { icon: '◆', label: 'Incident Management', desc: 'Real-time alerts & escalation' },
-                            { icon: '◆', label: 'Change Control', desc: 'CAB workflows & audit trails' },
-                            { icon: '◆', label: 'Network Topology', desc: 'Live device health monitoring' },
-                            { icon: '◆', label: 'Integrations', desc: 'Prometheus, Grafana & more' },
+                            { icon: '◆', label: 'Observability', desc: 'Metrics, logs, traces — on-prem first' },
+                            { icon: '◆', label: 'Compliance', desc: 'Controls, evidence, audit-ready posture' },
+                            { icon: '◆', label: 'Root cause analysis', desc: 'Timeline, blast radius, structured RCA' },
+                            { icon: '◆', label: 'Change & risk', desc: 'Controlled change with trading-safe guardrails' },
                         ].map((f, i) => (
                             <div key={i} className="l-feature animate-fade-up" style={{ animationDelay: `${0.2 + i * 0.1}s` }}>
                                 <span className="l-feature__dot">{f.icon}</span>
@@ -128,7 +128,7 @@ const Login = () => {
                 {/* Environment badge */}
                 <div className="l-env-badge">
                     <span className="l-env-dot" />
-                    Production · fs-mum-indmoney-prod-le
+                    On-prem · trade-ops primary site
                 </div>
             </div>
 
@@ -139,7 +139,7 @@ const Login = () => {
                     <div className="l-form-header">
                         <p className="l-form-eyebrow">Secure Portal</p>
                         <h2 className="l-form-title">Welcome back</h2>
-                        <p className="l-form-sub">Sign in to continue to your workspace</p>
+                        <p className="l-form-sub">Sign in to ArgusTradeOps System</p>
                     </div>
 
                     {/* Demo hint */}
@@ -222,7 +222,7 @@ const Login = () => {
                     </form>
 
                     <p className="l-footer-note">
-                        Protected by enterprise-grade encryption. © 2024 LinkedEye-FinSpot.
+                        Protected by enterprise-grade encryption. © 2026 ArgusTradeOps.
                     </p>
                 </div>
             </div>
